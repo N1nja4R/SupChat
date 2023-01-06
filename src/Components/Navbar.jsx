@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import {signOut} from "firebase/auth"
+import { auth } from '../firebase'
+import { AuthContext } from '../context/AuthContext'
 
 const Navbar = () => {
+  const {currentUser} = useContext(AuthContext)
+
   return (
     <div className='navbar'>
-      <span className='logo'>Sup! Chat</span>
-      <div className="user"> 
-        <img src="https://cdn.discordapp.com/attachments/788076965399756842/1021381532193132594/logo-discord-digital-art-cat-ears-simple-background-hd-wallpaper-preview.jpg" alt=""/>
-        <span>mykl</span>
-        <button>logout</button>
-      
+      <span className="logo">Sup! Chat</span>
+      <div className="user">
+        <img src={currentUser.photoURL} alt="" />
+        <span>{currentUser.displayName}</span>
+        <button onClick={()=>signOut(auth)}>logout</button>
       </div>
     </div>
   )
